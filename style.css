@@ -1,0 +1,38 @@
+#app {
+  max-width: 300px;
+  padding-top: 1em;
+}
+
+.countdown {
+  font-size: 4em;
+  cursor: pointer;
+  text-align: center;
+}
+
+.countdown-container {
+  padding-top: 4em;
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 2em;
+  width: 16em;
+  height: 16em;
+  border-radius: 50%;
+  border: 4px solid hsl(0, 0%, 21%);
+}
+
+.break {
+  background: hsl(171, 100%, 41%);
+  border-color: hsl(204, 86%, 53%);
+}
+
+.lengthSetting {
+  width: 45px;
+}
+
+.settings .column {
+  padding: 0.55rem;
+}
+
+.glitchButton .glitchButtonElement img {
+  width: 25px;
+}
