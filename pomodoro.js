@@ -2,6 +2,7 @@ class Pomodoro extends React.Component {
   constructor() {
     super()
 
+    this.alertSound = new Audio("https://cdn.glitch.com/4b8ed21e-014f-4ef7-96bc-b750152d7b22%2Fchange.ogg?1534817648143")
     let sessionLength = 20;
     let breakLength = 5;
     if (localStorage.getItem("sessionLength")) {
@@ -19,6 +20,7 @@ class Pomodoro extends React.Component {
       breakLength: breakLength,
       startTime: null,
       endTime: null,
+      settingsOpen: false,
     };
   }
 
@@ -92,13 +94,9 @@ class Pomodoro extends React.Component {
     let difference = this.state.endTime - currTime;
     this.setState({difference: difference})
     if ( difference <= 1000 ) {
-      this.playSound();
+      this.alertSound.play();
       this.change();
     }
-  }
-
-  playSound() {
-    new Audio("http://soundbible.com/grab.php?id=2156&type=mp3").play();
   }
 
   onChangeSessionLength(val) {
@@ -118,7 +116,7 @@ class Pomodoro extends React.Component {
   }
 
   render() {
-    let {playing, working, sessionLength, breakLength} = this.state;
+    let {playing, working, sessionLength, breakLength, settingsOpen} = this.state;
     let {minutes, seconds} = this.time;
 
     return <div className="box has-text-centered">
@@ -145,9 +143,14 @@ class Pomodoro extends React.Component {
             <i className="fas fa-exchange-alt"></i>
           </button>
         </p>
+        <p className="control">
+          <button className="button is-primary" onClick={() => this.setState({settingsOpen: !settingsOpen})}>
+            <i className="fas fa-cogs"></i>
+          </button>
+        </p>
       </div>
 
-      <div className="columns settings">
+      {settingsOpen ? <div className="columns settings">
         <LengthSetting
           disabled={playing}
           title="Session Length"
@@ -160,7 +163,7 @@ class Pomodoro extends React.Component {
           value={breakLength}
           onChange={this.onChangeBreakLength.bind(this)}
           />
-      </div>
+      </div> : "" }
 
       {working ? "" : <Giphy />}
     </div>
